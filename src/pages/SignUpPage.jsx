@@ -5,8 +5,9 @@ import { Link } from "react-router";
 export default function SignUpPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [age, setAge] = useState(0);
+    const [age, setAge] = useState();
     const [password, setPassword] = useState('');
+    const [mobileNo, setMobileNo] = useState();
     const [error, setError] = useState('');
 
     // Here e is the event object that gets triggered by default whenever a submit is happen 
@@ -14,7 +15,7 @@ export default function SignUpPage() {
         e.preventDefault();
 
         // if user doesn't provide these
-        if (!name || !email || !age || !password) {
+        if (!name || !email || !age || !password || mobileNo) {
             setError("Enter the required Fields");
             return;
         }
@@ -57,9 +58,21 @@ export default function SignUpPage() {
                         />
                     </div>
                     <div className="mb-4">
+                        <label htmlFor="mobile-no" className="block text-sm font-medium text-gray-700">Mobile: </label>
+                        <input
+                            type="number"
+                            id="mobile-no"
+                            value={mobileNo}
+                            onChange={(e) => setMobileNo(e.target.value)}
+                            placeholder="ex - 9198645161"
+                            required
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="mb-4">
                         <label htmlFor="age" className="block text-sm font-medium text-gray-700">Age: </label>
                         <input
-                            type="text"
+                            type="number"
                             id="age"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
