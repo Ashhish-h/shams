@@ -24,6 +24,7 @@ public class UserService {
         this.doctorRepository = doctorRepository;
     }
 
+    // for registering a user
     public ResponseEntity<?> registerUser(UserRegistrationDTO userDTO) {
         if (userDTO.getRole().equalsIgnoreCase("patient")) {
             Patient patient = new Patient(userDTO.getName(), userDTO.getEmail(), userDTO.getAge(),
@@ -36,6 +37,12 @@ public class UserService {
         }
 
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    // for deleting a user
+    public ResponseEntity<?> deleteUser(Long id) {
+        userRepository.deleteById(id);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
 }
