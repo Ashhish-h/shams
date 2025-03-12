@@ -24,5 +24,4 @@ public class UserRegistrationDTO {
     private Integer experience; // Doctor's experience
     private String clinic; // Doctor's associated clinic
 
-    
 }

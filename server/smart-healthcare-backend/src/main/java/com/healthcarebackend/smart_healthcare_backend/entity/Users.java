@@ -7,15 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+// import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+// import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter // for automatically generating getters
 @Setter // for automatically generating setters
-@AllArgsConstructor // for automatically generating a consturctor with all arg
-@NoArgsConstructor // for for automatically generating a consturctor with no arg
+// @AllArgsConstructor // for automatically generating a consturctor with all
+// arg
+// @NoArgsConstructor // for for automatically generating a consturctor with no
+// arg
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
@@ -32,5 +34,15 @@ public abstract class Users {
 
     // for child classes to define getRote()
     public abstract String getRole();
+
+    public Users() {
+    }
+
+    public Users(String name, String email, String password, String mobileNo) {
+        this.userName = name;
+        this.userEmail = email;
+        this.userPassword = password;
+        this.mobileNo = mobileNo;
+    }
 
 }
