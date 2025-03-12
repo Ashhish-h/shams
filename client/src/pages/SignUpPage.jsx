@@ -1,42 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
+import axios from 'axios';
 
 
 export default function SignUpPage() {
-    // const [name, setName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [age, setAge] = useState();
-    // const [password, setPassword] = useState('');
-    // const [mobileNo, setMobileNo] = useState();
-    // const [error, setError] = useState('');
     const [role, setRole] = useState('patient');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        number: '',
+        mobileNo: '',
         age: '',
         experience: '',
         clinic: '',
         password: '',
     });
 
-    // // Here e is the event object that gets triggered by default whenever a submit is happen 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     // if user doesn't provide these (basic validation)
-    //     if (!name || !email || !age || !password || mobileNo) {
-    //         setError("Enter the required Fields");
-    //         return;
-    //     }
-
-    //     // if all feilds are filled
-    //     setError('')
-
-    //     console.log("Name: ", name);
-    //     console.log("age: ", age);
-    //     console.log("email: ", email);
-    // };
 
     const handleRoleChange = (e) => {
         setRole(e.target.value);
@@ -46,10 +24,33 @@ export default function SignUpPage() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // API call to send signup data to the backend
-        console.log(formData);
+        const registerData = {
+            role,
+            "name": formData.name,
+            "email": formData.email,
+            "mobileNo": formData.mobileNo,
+            "age": formData.age,
+            "password": formData.password,
+            "experience": formData.experience,
+            "clinic": formData.clinic,
+        }
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/user/signup', registerData);
+            if (response.data) {
+                alert("User registered successfully");
+                console.log(console.log(formData));
+                window.location.href = '/login';
+            } else {
+                alert("User registration failed");
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -100,8 +101,8 @@ export default function SignUpPage() {
                         <label className="block text-gray-700 text-sm font-bold mb-1">Phone:</label>
                         <input
                             type="text"
-                            name="phone"
-                            value={formData.phone}
+                            name="mobileNo"
+                            value={formData.mobileNo}
                             onChange={handleInputChange}
                             required
                             className="block w-full p-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
