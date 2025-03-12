@@ -99,7 +99,7 @@ export default function SignUpPage() {
                     <div className="mb-3">
                         <label className="block text-gray-700 text-sm font-bold mb-1">Phone:</label>
                         <input
-                            type="number"
+                            type="text"
                             name="phone"
                             value={formData.phone}
                             onChange={handleInputChange}
