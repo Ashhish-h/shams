@@ -26,6 +26,19 @@ export default function SignUpPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!formData.name || !formData.email || !formData.mobileNo || !formData.age || !formData.password) {
+            alert("Please fill in all the fields");
+            return;
+        }
+
+        if (role === 'doctor' && (!formData.experience || !formData.clinic)) {
+            alert("Please fill in all the fields");
+            return;
+        }
+
+
+
         // API call to send signup data to the backend
         const registerData = {
             role,
