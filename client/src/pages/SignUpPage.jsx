@@ -55,7 +55,7 @@ export default function SignUpPage() {
             const response = await axios.post('http://localhost:8080/api/user/signup', registerData);
             if (response.data) {
                 alert("User registered successfully");
-                console.log(console.log(formData));
+                console.log(formData);
                 window.location.href = '/login';
             } else {
                 alert("User registration failed");
