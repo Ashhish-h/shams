@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
+import axios from 'axios';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -7,18 +8,35 @@ export default function LoginPage() {
     const [error, setError] = useState('');
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+
+        const loginUser = {
+            "userEmail": email,
+            "userPassword": password
+        }
 
         // is user doesn't provide these show error
         if (!email || !password) {
             setError('Please enter vaild credentials');
+            return;
         }
 
-        setError('');
-
-        console.log(email);
-        console.log(error);
+        // api calling
+        try {
+            const response = await axios.post('http://localhost:8080/api/user/login', loginUser)
+            if (response.status === 200) {
+                console.log(email, password, response.data);
+                alert('Login Successfull');
+            } else {
+                setError('Invalid credentials');
+            }
+        } catch (error) {
+            setError('Something went wrong');
+            
+        }
+        // console.log(response.data);
     }
     return (
         <>
