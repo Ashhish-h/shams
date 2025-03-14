@@ -1,18 +1,22 @@
 package com.healthcarebackend.smart_healthcare_backend.service;
 
+import org.springframework.http.HttpStatus;
+// import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.healthcarebackend.smart_healthcare_backend.dto.LoginDTO;
+// import com.healthcarebackend.smart_healthcare_backend.dto.LoginRequestDTO;
 import com.healthcarebackend.smart_healthcare_backend.dto.UserRegistrationDTO;
 import com.healthcarebackend.smart_healthcare_backend.entity.Doctor;
 import com.healthcarebackend.smart_healthcare_backend.entity.Patient;
+import com.healthcarebackend.smart_healthcare_backend.entity.Users;
 import com.healthcarebackend.smart_healthcare_backend.repository.DoctorRepository;
 import com.healthcarebackend.smart_healthcare_backend.repository.PatientRepository;
 import com.healthcarebackend.smart_healthcare_backend.repository.UserRepository;
-// import lombok.AllArgsConstructor;
 
 @Service
 public class UserService {
-
     private UserRepository userRepository;
     private PatientRepository patientRepository;
     private DoctorRepository doctorRepository;
@@ -22,6 +26,20 @@ public class UserService {
         this.userRepository = userRepository;
         this.patientRepository = patientRepository;
         this.doctorRepository = doctorRepository;
+    }
+
+    
+    // login request
+    public ResponseEntity<?> login(LoginDTO loginDTO) {
+    Users existingUser =
+    userRepository.findByUserEmail(loginDTO.getUserEmail());
+    if (existingUser == null) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+    if (!existingUser.getUserPassword().equals(loginDTO.getUserPassword())) {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+    }
+    return ResponseEntity.ok("Login successful");
     }
 
     // for registering a user
